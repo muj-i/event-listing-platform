@@ -1,36 +1,41 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useAuthStore from "../store/useAuthStore";
 
 const Login = () => {
   const { login } = useAuthStore();
-  const [form, setForm] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    login(form);
+    setError("");
+    try {
+      await login(form);
+      navigate("/dashboard");
+    } catch (err) {
+      setError("Invalid credentials");
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto">
-      <h2 className="text-xl font-bold">Login</h2>
-      <input
-        className="w-full p-2 border rounded"
-        type="email"
-        placeholder="Email"
-        value={form.email}
-        onChange={(e) => setForm({ ...form, email: e.target.value })}
-      />
-      <input
-        className="w-full p-2 border rounded"
-        type="password"
-        placeholder="Password"
-        value={form.password}
-        onChange={(e) => setForm({ ...form, password: e.target.value })}
-      />
-      <button className="bg-blue-600 text-white px-4 py-2 rounded" type="submit">
-        Login
-      </button>
-    </form>
+    <div className="max-w-sm mx-auto mt-10 p-6 border rounded">
+      <h2 className="text-xl font-bold mb-4">Login</h2>
+      {error && <p className="text-red-500 text-sm">{error}</p>}
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <input name="email" type="email" placeholder="Email" value={form.email} onChange={handleChange}
+          className="w-full p-2 border rounded" required />
+        <input name="password" type="password" placeholder="Password" value={form.password} onChange={handleChange}
+          className="w-full p-2 border rounded" required />
+        <button type="submit" className="w-full bg-indigo-600 text-white p-2 rounded">Login</button>
+      </form>
+    </div>
   );
 };
 

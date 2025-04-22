@@ -1,33 +1,27 @@
 import { create } from "zustand";
-import axios from "axios";
+import axios from "../api/axios";
 
 const useAuthStore = create((set) => ({
-  user: null,
-  token: localStorage.getItem("token") || "",
+  user: JSON.parse(localStorage.getItem("user")) || null,
 
-  login: async (data) => {
-    try {
-      const res = await axios.post("/api/auth/login", data);
-      localStorage.setItem("token", res.data.token);
-      set({ token: res.data.token, user: res.data.user });
-    } catch (err) {
-      alert("Login failed");
-    }
+  login: async (credentials) => {
+    const res = await axios.post("/auth/login", credentials);
+    localStorage.setItem("token", res.data.token);
+    localStorage.setItem("user", JSON.stringify(res.data.user));
+    set({ user: res.data.user });
   },
 
   register: async (data) => {
-    try {
-      const res = await axios.post("/api/auth/register", data);
-      localStorage.setItem("token", res.data.token);
-      set({ token: res.data.token, user: res.data.user });
-    } catch (err) {
-      alert("Registration failed");
-    }
+    const res = await axios.post("/auth/register", data);
+    localStorage.setItem("token", res.data.token);
+    localStorage.setItem("user", JSON.stringify(res.data.user));
+    set({ user: res.data.user });
   },
 
   logout: () => {
     localStorage.removeItem("token");
-    set({ token: "", user: null });
+    localStorage.removeItem("user");
+    set({ user: null });
   },
 }));
 
