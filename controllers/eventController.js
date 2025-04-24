@@ -44,3 +44,9 @@ export const updateEvent = async (req, res) => {
   const updated = await Event.findByIdAndUpdate(req.params.id, req.body, { new: true });
   res.json(updated);
 };
+
+// Get event by Category
+export const getEventByCategory = async (req, res) => {
+  const events = await Event.find({ category: req.params.category });
+  res.json(events);
+};
