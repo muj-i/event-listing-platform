@@ -20,24 +20,24 @@ const EventDetail = () => {
     fetchEvent();
   }, [id]);
 
-  if (!event) return <div className="p-4">Loading event...</div>;
+  if (!event) return <div className="container py-4">Loading event...</div>;
 
   return (
-    <div className="p-4 max-w-3xl mx-auto">
-      <h1 className="text-3xl font-bold mb-2">{event.name}</h1>
-      <p className="text-gray-600 mb-4">
-        📅 {event.date} at ⏰ {event.time} • 📍 {event.location}
-      </p>
+    <div className="container py-4" style={{ maxWidth: "768px" }}>
+      <div className="card shadow-sm p-4">
+        <h1 className="h3 fw-bold mb-3">{event.name}</h1>
+        <p className="text-muted mb-3">
+          📅 {event.date} at ⏰ {event.time} • 📍 {event.location}
+        </p>
 
-      {event.category && (
-        <span className="inline-block bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm mb-4">
-          {event.category}
-        </span>
-      )}
+        {event.category && (
+          <span className="badge bg-primary mb-3">{event.category}</span>
+        )}
 
-      <p className="text-lg leading-relaxed text-gray-700">
-        {event.description || "No description provided."}
-      </p>
+        <p className="fs-5">
+          {event.description || "No description provided."}
+        </p>
+      </div>
     </div>
   );
 };

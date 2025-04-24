@@ -10,26 +10,24 @@ const EventListing = () => {
   }, []);
 
   return (
-    <div className="p-4">
-      <h2 className="text-3xl font-bold mb-6 text-center">All Events</h2>
+    <div className="container py-4">
+      <h2 className="h3 fw-bold text-center mb-4">All Events</h2>
 
-      <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-6">
+      <div className="row g-4">
         {events.length > 0 ? (
           events.map((event) => (
-            <Link
-              key={event._id}
-              to={`/events/${event._id}`}
-              className="border rounded-lg shadow hover:shadow-lg p-4 transition"
-            >
-              <h3 className="text-xl font-bold mb-1">{event.name}</h3>
-              <p className="text-sm text-gray-600">{event.date} • {event.time}</p>
-              <p className="text-sm text-gray-500">{event.location}</p>
-              {event.category && (
-                <span className="inline-block mt-2 bg-indigo-100 text-indigo-600 px-3 py-1 text-xs rounded-full">
-                  {event.category}
-                </span>
-              )}
-            </Link>
+            <div key={event._id} className="col-sm-6 col-md-4">
+              <Link to={`/events/${event._id}`} className="card h-100 text-decoration-none text-dark shadow-sm">
+                <div className="card-body">
+                  <h5 className="card-title mb-1">{event.name}</h5>
+                  <p className="card-subtitle text-muted mb-1">{event.date} • {event.time}</p>
+                  <p className="card-text small">{event.location}</p>
+                  {event.category && (
+                    <span className="badge bg-info text-dark">{event.category}</span>
+                  )}
+                </div>
+              </Link>
+            </div>
           ))
         ) : (
           <p>No events available.</p>

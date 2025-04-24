@@ -25,16 +25,36 @@ const Login = () => {
   };
 
   return (
-    <div className="max-w-sm mx-auto mt-10 p-6 border rounded">
-      <h2 className="text-xl font-bold mb-4">Login</h2>
-      {error && <p className="text-red-500 text-sm">{error}</p>}
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input name="email" type="email" placeholder="Email" value={form.email} onChange={handleChange}
-          className="w-full p-2 border rounded" required />
-        <input name="password" type="password" placeholder="Password" value={form.password} onChange={handleChange}
-          className="w-full p-2 border rounded" required />
-        <button type="submit" className="w-full bg-indigo-600 text-white p-2 rounded">Login</button>
-      </form>
+    <div className="container d-flex justify-content-center mt-5">
+      <div className="card p-4 shadow" style={{ maxWidth: "400px", width: "100%" }}>
+        <h2 className="card-title text-center mb-3">Login</h2>
+        {error && <p className="text-danger text-center">{error}</p>}
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <input
+              name="email"
+              type="email"
+              placeholder="Email"
+              value={form.email}
+              onChange={handleChange}
+              className="form-control"
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              name="password"
+              type="password"
+              placeholder="Password"
+              value={form.password}
+              onChange={handleChange}
+              className="form-control"
+              required
+            />
+          </div>
+          <button type="submit" className="btn btn-primary w-100">Login</button>
+        </form>
+      </div>
     </div>
   );
 };

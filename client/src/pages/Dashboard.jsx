@@ -70,36 +70,52 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Welcome, {user?.name}</h2>
+    <div className="container py-5">
+      <h2 className="mb-4">Welcome, {user?.name}</h2>
 
       {/* 📋 Event Form */}
-      <form onSubmit={handleSubmit} className="space-y-3 mb-8 border p-4 rounded">
-        <h3 className="text-xl font-semibold">{editMode ? "Edit Event" : "Create New Event"}</h3>
-        <input type="text" name="name" placeholder="Event Name" value={form.name} onChange={handleChange} className="w-full p-2 border rounded" required />
-        <input type="date" name="date" value={form.date} onChange={handleChange} className="w-full p-2 border rounded" required />
-        <input type="time" name="time" value={form.time} onChange={handleChange} className="w-full p-2 border rounded" required />
-        <input type="text" name="location" placeholder="Location" value={form.location} onChange={handleChange} className="w-full p-2 border rounded" required />
-        <input type="text" name="category" placeholder="Category" value={form.category} onChange={handleChange} className="w-full p-2 border rounded" />
-        <textarea name="description" placeholder="Description" value={form.description} onChange={handleChange} className="w-full p-2 border rounded" rows="3" />
-        <button type="submit" className="bg-indigo-600 text-white py-2 px-4 rounded">
+      <form onSubmit={handleSubmit} className="card p-4 mb-5 shadow-sm">
+        <h3 className="card-title mb-3">{editMode ? "Edit Event" : "Create New Event"}</h3>
+        <div className="mb-3">
+          <input type="text" name="name" placeholder="Event Name" value={form.name} onChange={handleChange} className="form-control" required />
+        </div>
+        <div className="mb-3">
+          <input type="date" name="date" value={form.date} onChange={handleChange} className="form-control" required />
+        </div>
+        <div className="mb-3">
+          <input type="time" name="time" value={form.time} onChange={handleChange} className="form-control" required />
+        </div>
+        <div className="mb-3">
+          <input type="text" name="location" placeholder="Location" value={form.location} onChange={handleChange} className="form-control" required />
+        </div>
+        <div className="mb-3">
+          <input type="text" name="category" placeholder="Category" value={form.category} onChange={handleChange} className="form-control" />
+        </div>
+        <div className="mb-3">
+          <textarea name="description" placeholder="Description" value={form.description} onChange={handleChange} className="form-control" rows="3" />
+        </div>
+        <button type="submit" className="btn btn-primary">
           {editMode ? "Update" : "Create"}
         </button>
       </form>
 
       {/* 📃 Your Events */}
-      <h3 className="text-xl font-semibold mb-2">Your Events</h3>
-      <div className="grid md:grid-cols-2 gap-4">
+      <h3 className="mb-3">Your Events</h3>
+      <div className="row g-4">
         {userEvents.length > 0 ? (
           userEvents.map((event) => (
-            <div key={event._id} className="border rounded p-4 shadow-sm">
-              <h4 className="font-bold text-lg">{event.name}</h4>
-              <p>{event.date} • {event.time}</p>
-              <p className="text-sm text-gray-600">{event.location}</p>
-              {event.category && <p className="text-xs text-indigo-600">#{event.category}</p>}
-              <div className="mt-2 space-x-2">
-                <button onClick={() => handleEdit(event)} className="text-blue-600">Edit</button>
-                <button onClick={() => handleDelete(event._id)} className="text-red-500">Delete</button>
+            <div key={event._id} className="col-md-6">
+              <div className="card h-100 shadow-sm">
+                <div className="card-body">
+                  <h5 className="card-title">{event.name}</h5>
+                  <h6 className="card-subtitle mb-2 text-muted">{event.date} • {event.time}</h6>
+                  <p className="card-text">{event.location}</p>
+                  {event.category && <p className="badge bg-info text-dark">#{event.category}</p>}
+                  <div className="mt-3">
+                    <button onClick={() => handleEdit(event)} className="btn btn-sm btn-outline-primary me-2">Edit</button>
+                    <button onClick={() => handleDelete(event._id)} className="btn btn-sm btn-outline-danger">Delete</button>
+                  </div>
+                </div>
               </div>
             </div>
           ))

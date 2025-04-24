@@ -10,13 +10,17 @@ const EventList = () => {
   }, []);
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-4">All Events</h2>
-      <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+    <div className="container py-4">
+      <h2 className="h4 fw-bold mb-4">All Events</h2>
+      <div className="row g-4">
         {events.length === 0 ? (
           <p>No events found.</p>
         ) : (
-          events.map((event) => <EventCard key={event._id} event={event} />)
+          events.map((event) => (
+            <div key={event._id} className="col-sm-6 col-md-4">
+              <EventCard event={event} />
+            </div>
+          ))
         )}
       </div>
     </div>
