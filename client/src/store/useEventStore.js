@@ -59,6 +59,22 @@ const useEventStore = create((set, get) => ({
     }
   },
 
+  getEventByCategory: async (category) => {
+   try {
+      const events = await axios.get(`/events?category=${category}`);
+      if (events.data.length === 0) {
+        console.log("No events found for this category.");
+        return [];
+      }
+      return events;
+    }
+    catch (err) {
+      console.error("Failed to filter events by category:", err);
+      return [];
+    
+   }
+  },
+
   setSelectedEvent: (event) => set({ selectedEvent: event }),
 }));
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useAuthStore from "../store/useAuthStore";
 import useEventStore from "../store/useEventStore";
+import useCategoryStore from "../store/useCategoryStore";
 
 const Dashboard = () => {
   const { user } = useAuthStore();
@@ -11,6 +12,9 @@ const Dashboard = () => {
     deleteEvent,
     updateEvent,
   } = useEventStore();
+  const { createCategory } = useCategoryStore();
+
+  
 
   const [form, setForm] = useState({
     name: "",
@@ -39,6 +43,9 @@ const Dashboard = () => {
       setEditId(null);
     } else {
       await createEvent(form);
+      if (form.category.trim()) {
+        await createCategory({ category: form.category.trim() });
+      }
     }
     setForm({
       name: "",
@@ -89,7 +96,15 @@ const Dashboard = () => {
           <input type="text" name="location" placeholder="Location" value={form.location} onChange={handleChange} className="form-control" required />
         </div>
         <div className="mb-3">
-          <input type="text" name="category" placeholder="Category" value={form.category} onChange={handleChange} className="form-control" />
+          <input
+            type="text"
+            name="category"
+            placeholder="Category"
+            value={form.category}
+            onChange={handleChange}
+            className="form-control"
+            required
+          />
         </div>
         <div className="mb-3">
           <textarea name="description" placeholder="Description" value={form.description} onChange={handleChange} className="form-control" rows="3" />
